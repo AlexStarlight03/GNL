@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adube <adube@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 10:49:18 by adube             #+#    #+#             */
-/*   Updated: 2023/05/31 12:30:44 by adube            ###   ########.fr       */
+/*   Created: 2023/05/31 12:00:39 by adube             #+#    #+#             */
+/*   Updated: 2023/05/31 12:30:41 by adube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*next_call_prep(char *s)
 {
@@ -78,7 +78,7 @@ char	*read_file(int fd, char *result)
 	while (count_read > 0)
 	{
 		count_read = read(fd, buffer, BUFFER_SIZE);
-		if (count_read < 0)
+		if (count_read == -1)
 		{
 			free(buffer);
 			return (NULL);
@@ -100,11 +100,8 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buffer = read_file(fd, buffer);
-	if (buffer == NULL)
-	{
-		free(buffer);
-		return (NULL);	
-	}
+	if (!buffer)
+		return (NULL);
 	line = define_line(buffer);
 	buffer = next_call_prep(buffer);
 	return (line);
