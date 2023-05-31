@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adube <adube@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 12:01:48 by adube             #+#    #+#             */
-/*   Updated: 2023/05/31 12:30:42 by adube            ###   ########.fr       */
+/*   Created: 2023/05/31 14:05:32 by adube             #+#    #+#             */
+/*   Updated: 2023/05/31 14:12:45 by adube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 50
+# endif
 
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *s, size_t n);

@@ -6,7 +6,7 @@
 /*   By: adube <adube@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:49:56 by adube             #+#    #+#             */
-/*   Updated: 2023/05/31 12:32:34 by adube            ###   ########.fr       */
+/*   Updated: 2023/05/31 14:12:51 by adube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 50
+# endif
 
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *s, size_t n);

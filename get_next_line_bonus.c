@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adube <adube@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 12:00:39 by adube             #+#    #+#             */
-/*   Updated: 2023/05/31 12:30:41 by adube            ###   ########.fr       */
+/*   Created: 2023/05/31 14:05:39 by adube             #+#    #+#             */
+/*   Updated: 2023/05/31 14:13:55 by adube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*next_call_prep(char *s)
 		return (NULL);
 	}
 	new_line = ft_calloc((ft_strlen(s) - i + 1), sizeof(char));
+	if (!new_line)
+		return (NULL);
 	i++;
 	while (s[i])
 		new_line[j++] = s[i++];
@@ -46,6 +48,8 @@ char	*define_line(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	line = ft_calloc(i + 2, sizeof(char));
+	if (!line)
+		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i])
 	{
@@ -74,19 +78,20 @@ char	*read_file(int fd, char *result)
 	if (!result)
 		result = ft_calloc(1, 1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (NULL);
 	count_read = 1;
-	while (count_read > 0)
+	while (count_read != 0 && !string_search(buffer, '\n'))
 	{
 		count_read = read(fd, buffer, BUFFER_SIZE);
 		if (count_read == -1)
 		{
 			free(buffer);
+			free(result);
 			return (NULL);
 		}
 		buffer[count_read] = 0;
 		result = join_free(result, buffer);
-		if (string_search(buffer, '\n'))
-			break ;
 	}
 	free(buffer);
 	return (result);
@@ -94,15 +99,15 @@ char	*read_file(int fd, char *result)
 
 char	*get_next_line(int fd)
 {
-	static char		*buffer;
+	static char		*buffer[OPEN_MAX];
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 1024)
 		return (NULL);
-	buffer = read_file(fd, buffer);
-	if (!buffer)
+	buffer[fd] = read_file(fd, buffer[fd]);
+	if (buffer[fd] == NULL)
 		return (NULL);
-	line = define_line(buffer);
-	buffer = next_call_prep(buffer);
+	line = define_line(buffer[fd]);
+	buffer[fd] = next_call_prep(buffer[fd]);
 	return (line);
 }
