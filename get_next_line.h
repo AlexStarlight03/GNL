@@ -6,7 +6,7 @@
 /*   By: adube <adube@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:49:56 by adube             #+#    #+#             */
-/*   Updated: 2023/05/31 14:12:51 by adube            ###   ########.fr       */
+/*   Updated: 2023/06/01 12:29:06 by adube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 50
 # endif
+
+typedef struct s_index
+{
+	int	i;
+	int	j;
+}t_index;
 
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *s, size_t n);

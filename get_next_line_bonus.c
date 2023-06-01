@@ -6,7 +6,7 @@
 /*   By: adube <adube@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:05:39 by adube             #+#    #+#             */
-/*   Updated: 2023/05/31 14:13:55 by adube            ###   ########.fr       */
+/*   Updated: 2023/06/01 12:29:12 by adube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 char	*next_call_prep(char *s)
 {
-	int		i;
-	int		j;
+	t_index	index;
 	char	*new_line;
 
-	i = 0;
-	j = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (!s[i])
+	index.i = 0;
+	index.j = 0;
+	while (s[index.i] && s[index.i] != '\n')
+		index.i++;
+	if (!s[index.i])
 	{
 		free(s);
 		return (NULL);
 	}
-	new_line = ft_calloc((ft_strlen(s) - i + 1), sizeof(char));
+	new_line = ft_calloc((ft_strlen(s) - index.i + 1), sizeof(char));
 	if (!new_line)
 		return (NULL);
-	i++;
-	while (s[i])
-		new_line[j++] = s[i++];
-	free(s);
+	index.i++;
+	while (s[index.i])
+		new_line[index.j++] = s[index.i++];
+	if (*new_line == 0)
+	{
+		free (new_line);
+		new_line = NULL;
+	}
+	free (s);
 	return (new_line);
 }
 
@@ -67,6 +71,11 @@ char	*join_free(char *result, char *buffer)
 
 	joined = str_join(result, buffer);
 	free(result);
+	if (*joined == 0)
+	{
+		free(joined);
+		joined = NULL;
+	}
 	return (joined);
 }
 
